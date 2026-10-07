@@ -1,4 +1,4 @@
-print("Proyecto Inventario Avance 4")
+print("Proyecto Inventario Avance 5")
 print()
 
 """Datos de los productos que se venden"""
@@ -44,22 +44,20 @@ stock_minimo6 = 3
 comprado6 = 0
 ingreso6 = 0
 
-"""Funcion para comprar un producto, revisar el stock que queda, aplicar descuentos y calcular los ingresos"""
+"""Funcion para comprar un producto, su precio, revisar el stock que queda, aplicar descuentos mediante la cantidad comprada y calcular los ingresos"""
 def comproducto(producto, precio, cantidad, stock_minimo, comprado, ingreso):
 
-    """Si se quiere seguir comprando:"""
+    """Si se quiere seguir comprando el ciclo se repite"""
     continuar = "si"
-
-    """El ciclo se repite"""
     while continuar == "si":
 
-        """Muestra los datos del producto"""
+        """Datos del producto"""
         print()
         print("Producto: ", producto)
         print("Precio: ", precio)
         print("Cantidad disponible: ", cantidad)
 
-        """Dice si ya no quedan productos"""
+        """Cantidad de productos"""
         if cantidad == 0:
             print("------ Ya no hay ------")
 
@@ -67,35 +65,36 @@ def comproducto(producto, precio, cantidad, stock_minimo, comprado, ingreso):
             agregarmas = input("Quieres reabastecer este producto? (si o no): ")
 
             if agregarmas == "si":
-                """Pide la cantidad que se quiere agregar"""
+                
+                """Si si, pide la cantidad que se quiere agregar"""
                 nuevas = int(input("------ Cuantas unidades quieres agregar?: "))
 
                 """Suma lo nuevo agregado al inventario"""
                 cantidad = cantidad + nuevas
-
                 print("------ Stock ------")
             else:
+                
                 """Si no se quiere agregar cosas termina la funcion"""
                 return cantidad, comprado, ingreso
 
         """Calcula el valor total del inventario disponible"""
         total = precio * cantidad
-
         print("Total inventario: ", total)
 
-        """Pregunta cuantas unidades del producto se quieren comprar"""
+        """Pregunta cuantas unidades del producto qieres comprar"""
         venta = int(input("------ Cuantos compras?: "))
 
-        """Revisa si se quieren comprar mas unidades de las disponibles"""
+        """Revisa si quieres comprar mas unidades de las disponibles"""
         if venta > cantidad:
             print("------ No hay suficientes unidades ------")
 
-        """Revisa si la cantidad introducida es menor o igual a cero"""
+        """Revisa si la cantidad es menor o igual a cero"""
         elif venta <= 0:
             print("------ Eso no es una cantidad valida  ------")
 
         """Si la cantidad es valida se realiza la compra"""
         else:
+            
             """Calcula el precio de las coss compradas"""
             costoff = precio * venta
 
@@ -103,11 +102,10 @@ def comproducto(producto, precio, cantidad, stock_minimo, comprado, ingreso):
             if venta >= 5:
                 descuento = (costoff / 100) * 10
                 costoff = costoff - descuento
-
-                print("------ Tienes descuento por comprar 5+ (｡･∀･)ﾉﾞ ------")
+                print("------ Tienes descuento por comprar 5+ ------")
                 print("------ Descuento aplicado: ", descuento, " ------")
 
-            """Elimina la cantidad de cosas compradas del inventario"""
+            """Elimina del inventario la cantidad de cosas compradas"""
             cantidad = cantidad - venta
 
             """Suma las cosas compradas"""
@@ -133,27 +131,24 @@ def comproducto(producto, precio, cantidad, stock_minimo, comprado, ingreso):
 
             """Pregunta si el cliente quiere seguir comprando"""
             continuar = input("Quieres seguir comprando? (si o no): ")
-
             if continuar == "no":
                 return cantidad, comprado, ingreso
-
             elif continuar != "si":
                 print("------ Eso es un no ------")
                 return cantidad, comprado, ingreso
 
-    """Regresa los datos actualizados del producto"""
+    """Regresa los datos ya actualizados del producto"""
     return cantidad, comprado, ingreso
 
-""" Esta funcion muestra el menu principal y permite elegir un producto"""
+"""Esta muestra el menu principal y permite elegir un producto"""
 def menu(cantidad, comprado, ingreso, cantidad2, comprado2, ingreso2, cantidad3, comprado3, ingreso3,
          cantidad4, comprado4, ingreso4, cantidad5, comprado5, ingreso5, cantidad6, comprado6, ingreso6):
 
     """Guarda la opcion que eligieron"""
     opcion = ""
 
-    """El menu se repite hasta que el usuario le de a salir"""
+    """La funcion del menu es reusable porque se repite hasta que el usuario le de a salir"""
     while opcion != "8":
-
         print()
         print("========== MENU ==========")
         print("1. Comprar computadora")
@@ -165,10 +160,10 @@ def menu(cantidad, comprado, ingreso, cantidad2, comprado2, ingreso2, cantidad3,
         print("7. Ver reporte")
         print("8. Salir")
 
-        """Pide al usuario una opcion"""
+        """Te pide una opcion"""
         opcion = input("Que quieres hacer?: ")
 
-        """Opciones para comprar cada producto"""
+        """Compra de cada producto"""
         if opcion == "1":
             cantidad, comprado_ahora, ingreso_ahora = comproducto(
                 producto, precio, cantidad, stock_minimo, 0, 0)
@@ -182,41 +177,35 @@ def menu(cantidad, comprado, ingreso, cantidad2, comprado2, ingreso2, cantidad3,
         elif opcion == "2":
             cantidad2, comprado_ahora, ingreso_ahora = comproducto(
                 producto2, precio2, cantidad2, stock_minimo2, 0, 0)
-
             comprado2 = comprado2 + comprado_ahora
             ingreso2 = ingreso2 + ingreso_ahora
 
         elif opcion == "3":
             cantidad3, comprado_ahora, ingreso_ahora = comproducto(
                 producto3, precio3, cantidad3, stock_minimo3, 0, 0)
-
             comprado3 = comprado3 + comprado_ahora
             ingreso3 = ingreso3 + ingreso_ahora
 
         elif opcion == "4":
             cantidad4, comprado_ahora, ingreso_ahora = comproducto(
                 producto4, precio4, cantidad4, stock_minimo4, 0, 0)
-
             comprado4 = comprado4 + comprado_ahora
             ingreso4 = ingreso4 + ingreso_ahora
 
         elif opcion == "5":
             cantidad5, comprado_ahora, ingreso_ahora = comproducto(
                 producto5, precio5, cantidad5, stock_minimo5, 0, 0)
-
             comprado5 = comprado5 + comprado_ahora
             ingreso5 = ingreso5 + ingreso_ahora
 
         elif opcion == "6":
             cantidad6, comprado_ahora, ingreso_ahora = comproducto(
                 producto6, precio6, cantidad6, stock_minimo6, 0, 0)
-
             comprado6 = comprado6 + comprado_ahora
             ingreso6 = ingreso6 + ingreso_ahora
 
-        """Opcion para mostrar el reporte"""
+        """Muestra el reporte"""
         elif opcion == "7":
-
             print()
             print("========== REPORTE ==========")
 
@@ -230,7 +219,6 @@ def menu(cantidad, comprado, ingreso, cantidad2, comprado2, ingreso2, cantidad3,
 
             """Calcula todos los ingresos de la tienda"""
             ingreso_total = ingreso + ingreso2 + ingreso3 + ingreso4 + ingreso5 + ingreso6
-
             print("Ingreso total de la tienda: ", ingreso_total)
 
         """Opcion para salir"""
@@ -247,7 +235,7 @@ def menu(cantidad, comprado, ingreso, cantidad2, comprado2, ingreso2, cantidad3,
             cantidad3, comprado3, ingreso3, cantidad4, comprado4, ingreso4,
             cantidad5, comprado5, ingreso5, cantidad6, comprado6, ingreso6)
 
-"""Se ejecuta la funcion del menu y se reciben todos los datos actualizados"""
+"""Se llama de vuelta al menu y guarda todos los datos actualizados"""
 (cantidad, comprado, ingreso, cantidad2, comprado2, ingreso2, cantidad3, comprado3, ingreso3,
  cantidad4, comprado4, ingreso4, cantidad5, comprado5, ingreso5, cantidad6, comprado6, ingreso6) = menu(
     cantidad, comprado, ingreso, cantidad2, comprado2, ingreso2, cantidad3, comprado3, ingreso3,
