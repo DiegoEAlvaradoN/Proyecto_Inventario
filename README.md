@@ -32,7 +32,7 @@ La meta es crear un programa sencillo que permita llevar un control básico de l
 17. Mostrar el resumen final de ventas e ingresos.
 18. Finalizar el programa.
 
-##  Incorpora a tu proyecto libre estrucutras de decisión
+##   Incorpora a tu proyecto libre estrucutras de repetición (ciclos)
 
 - Se agregaron más productos al inventario: teclado, monitor y audífonos
 
