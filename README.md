@@ -1,7 +1,7 @@
 # Proyecto_Inventario
 ### Contexto
 
-Se cambió el enfoque inicial del proyecto debido a haber entendido mejor el objetivo de la clase, pudiendo ver que la propuesta inicialmente planteada era una meta inalcanzable y poco realista si se toma en cuenta lo que realmente se planeó para la clase, entonces el proyecto consiste en desarrollar un sistema básico de inventario utilizando únicamente Python
+Se cambió el enfoque inicial del proyecto debido a haber entendido mejor el objetivo de la clase, pudiendo ver que la propuesta inicialmente planteada era una meta inalcanzable y poco realista si se toma en cuenta lo que realmente se planeó como el contenido educativo del plan academico, entonces el proyecto consiste en desarrollar un sistema básico de inventario utilizando únicamente Python
 
 El programa permitirá registrar productos, consultar el inventario, modificar cantidades,, añadir descuentos, eliminar productos y verificar las existencias disponibles, todo mediante la terminal y Python
 
