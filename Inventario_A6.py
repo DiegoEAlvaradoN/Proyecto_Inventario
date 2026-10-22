@@ -1,13 +1,20 @@
 print()
-print("Proyecto Inventario Avance 6")
+print("Proyecto Inventario Avance 7")
 
-# Listas de los productos que se venden
-productos = ["Computadora", "Telefono", "Raton", "Teclado", "Monitor", "Audifonos"]
-precios = [15000, 8000, 800, 1200, 3000, 950]
-cantidades = [10, 10, 10, 10, 10, 10]
-stock_minimo = [3, 3, 3, 3, 3, 3]
-comprados = [0, 0, 0, 0, 0, 0]
-ingresos = [0, 0, 0, 0, 0, 0]
+# Matriz del inventario: cada fila es un producto
+# Columnas: 0 = nombre, 1 = precio, 2 = cantidad, 3 = stock minimo, 4 = comprados, 5 = ingresos
+inventario = [
+    ["Computadora", 15000, 10, 3, 0, 0],
+    ["Telefono", 8000, 10, 3, 0, 0],
+    ["Raton", 800, 10, 3, 0, 0],
+    ["Teclado", 1200, 10, 3, 0, 0],
+    ["Monitor", 3000, 10, 3, 0, 0],
+    ["Audifonos", 950, 10, 3, 0, 0]
+]
+
+# Matriz del historial de compras: empieza vacia y cada compra agrega una fila
+# Columnas: 0 = producto, 1 = unidades, 2 = subtotal
+historial = []
 
 # Funcion para comprar un producto,mostrar el precio, revisar el stock, aplicar descuentos y calcular los ingresos
 def comproducto(numero):
@@ -16,14 +23,14 @@ def comproducto(numero):
     continuar = "si"
     while continuar == "si":
 
-        # Datos del producto seleccionado de las listas
+        # Datos del producto seleccionado de la matriz
         print()
-        print("Producto: ", productos[numero])
-        print("Precio: ", precios[numero])
-        print("Cantidad disponible: ", cantidades[numero])
+        print("Producto: ", inventario[numero][0])
+        print("Precio: ", inventario[numero][1])
+        print("Cantidad disponible: ", inventario[numero][2])
 
         # Revisa si ya no quedan productos
-        if cantidades[numero] == 0:
+        if inventario[numero][2] == 0:
             print()
             print("------ Ya no hay ------")
             print()
@@ -37,7 +44,7 @@ def comproducto(numero):
 
                 # Suma lo nuevo al inventario
                 if nuevas > 0:
-                    cantidades[numero] = cantidades[numero] + nuevas
+                    inventario[numero][2] = inventario[numero][2] + nuevas
                     print()
                     print("------ Stock actualizado ------")
                     print()
@@ -49,7 +56,7 @@ def comproducto(numero):
                 return
 
         # Calcula el valor total del inventario disponible
-        total = precios[numero] * cantidades[numero]
+        total = inventario[numero][1] * inventario[numero][2]
         print("Total inventario: ", total)
 
         # Pregunta cuantas unidades se quieren comprar
@@ -57,7 +64,7 @@ def comproducto(numero):
         venta = int(input("------ Cuantos compras?: "))
 
         # Revisa si se quieren comprar mas unidades de las disponibles
-        if venta > cantidades[numero]:
+        if venta > inventario[numero][2]:
             print()
             print("------ No hay suficientes unidades ------")
 
@@ -70,7 +77,7 @@ def comproducto(numero):
         else:
 
             # Calcula el precio de las cosas compradas
-            costoff = precios[numero] * venta
+            costoff = inventario[numero][1] * venta
 
             # Si compra 5 o mas unidades se aplica un descuento del 10%
             if venta >= 5:
@@ -82,28 +89,31 @@ def comproducto(numero):
                 print()
 
             # Elimina del inventario la cantidad comprada
-            cantidades[numero] = cantidades[numero] - venta
+            inventario[numero][2] = inventario[numero][2] - venta
 
-            # Suma las unidades vendidas en la lista
-            comprados[numero] = comprados[numero] + venta
+            # Suma las unidades vendidas
+            inventario[numero][4] = inventario[numero][4] + venta
 
-            # Suma el dinero obtenido por la venta en la lista
-            ingresos[numero] = ingresos[numero] + costoff
+            # Suma el dinero obtenido por la venta
+            inventario[numero][5] = inventario[numero][5] + costoff
+
+            # Agrega una fila nueva al historial con esta compra
+            historial.append([inventario[numero][0], venta, costoff])
 
             # Muestra las unidades que quedan
-            print("------ Unidades restantes: ", cantidades[numero])
+            print("------ Unidades restantes: ", inventario[numero][2])
 
             # Muestra el precio de la compra
             print("------ Subtotal de esta compra: ", costoff)
 
             # Si ya no quedan unidades se termina la funcion
-            if cantidades[numero] == 0:
+            if inventario[numero][2] == 0:
                 print()
                 print("------ Ya no hay ------")
                 return
 
             # Revisa si quedan pocas unidades
-            if cantidades[numero] <= stock_minimo[numero]:
+            if inventario[numero][2] <= inventario[numero][3]:
                 print()
                 print("------ Quedan pocos ------")
 
@@ -122,21 +132,21 @@ def mostrar_inventario():
     print()
     print("========== INVENTARIO ==========")
 
-    # Recorre las listas para mostrar cada producto
+    # Recorre las filas de la matriz para mostrar cada producto
     for i in range(6):
         print()
-        print("Producto: ", productos[i])
-        print("Precio: ", precios[i])
-        print("Cantidad disponible: ", cantidades[i])
+        print("Producto: ", inventario[i][0])
+        print("Precio: ", inventario[i][1])
+        print("Cantidad disponible: ", inventario[i][2])
 
         # Calcula el valor de cada producto en el inventario
-        total = precios[i] * cantidades[i]
+        total = inventario[i][1] * inventario[i][2]
         print("Valor del inventario: ", total)
 
         # Revisa si quedan pocos productos
-        if cantidades[i] == 0:
+        if inventario[i][2] == 0:
             print("------ Agotado ------")
-        elif cantidades[i] <= stock_minimo[i]:
+        elif inventario[i][2] <= inventario[i][3]:
             print("------ Quedan pocos ------")
 
 # Funcion para mostrar las ventas e ingresos
@@ -144,19 +154,51 @@ def reporte():
     print()
     print("========== REPORTE ==========")
 
-    # Recorre las listas para mostrar las ventas de cada producto
+    # Recorre las filas de la matriz para mostrar las ventas de cada producto
     for i in range(6):
         print()
-        print("Producto: ", productos[i])
-        print("Unidades vendidas: ", comprados[i])
-        print("Ingreso: ", ingresos[i])
+        print("Producto: ", inventario[i][0])
+        print("Unidades vendidas: ", inventario[i][4])
+        print("Ingreso: ", inventario[i][5])
 
     # Calcula los ingresos totales de la tienda
     ingreso_total = 0
     for i in range(6):
-        ingreso_total = ingreso_total + ingresos[i]
+        ingreso_total = ingreso_total + inventario[i][5]
     print()
     print("Ingreso total de la tienda: ", ingreso_total)
+
+# Funcion para mostrar el historial de compras (recorre la matriz con dos ciclos)
+def mostrar_historial():
+    print()
+    print("========== HISTORIAL ==========")
+
+    # Si no hay compras todavia
+    if len(historial) == 0:
+        print()
+        print("------ Todavia no hay compras ------")
+        return
+
+    # Ciclo de afuera: recorre cada fila (cada compra)
+    for i in range(len(historial)):
+        print()
+        print("Compra numero: ", i + 1)
+
+        # Ciclo de adentro: recorre cada columna de esa compra
+        for j in range(3):
+            if j == 0:
+                print("Producto: ", historial[i][j])
+            elif j == 1:
+                print("Unidades: ", historial[i][j])
+            else:
+                print("Subtotal: ", historial[i][j])
+
+    # Suma la columna de subtotales
+    suma = 0
+    for i in range(len(historial)):
+        suma = suma + historial[i][2]
+    print()
+    print("Total de todas las compras: ", suma)
 
 # Funcion que muestra el menu principal y permite elegir un producto
 def menu():
@@ -165,7 +207,7 @@ def menu():
     opcion = ""
 
     # El menu se repite hasta que el usuario decida salir
-    while opcion != "9":
+    while opcion != "10":
         print()
         print("========== MENU ==========")
         print("1. Comprar computadora")
@@ -176,13 +218,14 @@ def menu():
         print("6. Comprar audifonos")
         print("7. Ver reporte")
         print("8. Ver inventario")
-        print("9. Salir")
+        print("9. Ver historial de compras")
+        print("10. Salir")
 
         # Pide una opcion
         print()
         opcion = input("Que quieres hacer?: ")
 
-        # Compra de cada producto usando su posicion en las listas
+        # Compra de cada producto usando su fila en la matriz
         if opcion == "1":
             comproducto(0)
         elif opcion == "2":
@@ -204,8 +247,12 @@ def menu():
         elif opcion == "8":
             mostrar_inventario()
 
-        # Opcion para salir
+        # Muestra el historial
         elif opcion == "9":
+            mostrar_historial()
+
+        # Opcion para salir
+        elif opcion == "10":
             print()
             print("------ Gracias por usar el inventario ------")
 
@@ -214,25 +261,25 @@ def menu():
             print()
             print("------ Esa opcion no existe ------")
 
-# Llama a la funcion del menu
+# Llama al menu
 menu()
 
 # Muestra la cantidad total vendida de cada producto
 print()
 print("========== COMPRA FINAL ==========")
 for i in range(6):
-    print(productos[i], ": ", comprados[i])
+    print(inventario[i][0], ": ", inventario[i][4])
 
 # Muestra los ingresos obtenidos por cada producto
 print()
 print("========== INGRESOS ==========")
 for i in range(6):
-    print(productos[i], ": ", ingresos[i])
+    print(inventario[i][0], ": ", inventario[i][5])
 
 # Calcula el ingreso total de todos los productos
 ingreso_total = 0
 for i in range(6):
-    ingreso_total = ingreso_total + ingresos[i]
+    ingreso_total = ingreso_total + inventario[i][5]
 
 # Muestra el ingreso total
 print("Ingreso total: ", ingreso_total)
