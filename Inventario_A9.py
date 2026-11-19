@@ -1,9 +1,8 @@
 print()
-print("Proyecto Inventario Avance 8")
+print("Proyecto Inventario Avance 9")
 
 # Matriz del inventario: cada fila es un producto
-# Columnas: 0 = nombre, 1 = precio, 2 = cantidad, 3 = stock minimo, 4 = comprados, 5 = ingresos
-# Los nombres se guardan en minusculas ya luego capitalize() los muestra bien
+# 0 = nombre, 1 = precio, 2 = cantidad disponible, 3 = minimo, 4 = vendidos, 5 = ingreso acumulado
 inventario = [
     ["computadora", 15000, 10, 3, 0, 0],
     ["telefono", 8000, 10, 3, 0, 0],
@@ -14,8 +13,41 @@ inventario = [
 ]
 
 # Matriz del historial de compras, empieza vacia y cada compra agrega una fila
-# Columnas: 0 = producto, 1 = unidades, 2 = subtotal
+# Columnas: 0 = producto, 1 = unidades, 2 = costo
 historial = []
+
+# Funcion para guardar el inventario en el archivo "inventario.txt"
+def guardar_inventario():
+    guardar = open("inventario.txt", "w")
+    for i in range(6):
+        linea = inventario[i][0] + "," + str(inventario[i][1]) + "," + str(inventario[i][2]) + "," + str(inventario[i][3]) + "," + str(inventario[i][4]) + "," + str(inventario[i][5])
+        guardar.write(linea + "\n")
+    guardar.close()
+
+# Funcion para cargar el inventario desde inventario.txt al iniciar el programa
+def cargar_inventario():
+    guardar = open("inventario.txt", "r")
+
+    # Cada linea del archivo es una fila de la matriz
+    i = 0
+    for linea in guardar:
+
+        # split separa la linea en una lista usando la coma
+        datos = linea.strip().split(",")
+
+        # Pasa los datos de texto a numero y los guarda en la matriz
+        inventario[i][1] = int(datos[1])
+        inventario[i][2] = int(datos[2])
+        inventario[i][3] = int(datos[3])
+        inventario[i][4] = int(datos[4])
+        inventario[i][5] = float(datos[5])
+        i = i + 1
+    guardar.close()
+    print()
+    print("------ Inventario cargado ------")
+
+# Carga los datos guardados antes de iniciar el menu
+cargar_inventario()
 
 # Funcion para comprar un producto,mostrar el precio, revisar el stock, aplicar descuentos y calcular los ingresos
 def comproducto(numero):
@@ -49,6 +81,9 @@ def comproducto(numero):
                     print()
                     print("------ Stock actualizado ------")
                     print()
+
+                    # Guarda el cambio en el archivo
+                    guardar_inventario()
                 else:
                     print()
                     print("------ Cantidad no valida ------")
@@ -100,6 +135,9 @@ def comproducto(numero):
 
             # Agrega una fila nueva al historial con esta compra
             historial.append([inventario[numero][0], venta, costoff])
+
+            # Guarda la compra en el archivo para no perder los cambios
+            guardar_inventario()
 
             # Muestra las unidades que quedan
             print("------ Unidades restantes: ", inventario[numero][2])
@@ -320,9 +358,6 @@ for i in range(6):
 ingreso_total = 0
 for i in range(6):
     ingreso_total = ingreso_total + inventario[i][5]
-
-# Muestra el ingreso total
-print("Ingreso total: ", ingreso_total)
 
 # Muestra el ingreso total
 print("Ingreso total: ", ingreso_total)
